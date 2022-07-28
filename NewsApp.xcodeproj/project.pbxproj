@@ -8,20 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		593642E02891562000EFAAA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642DF2891562000EFAAA3 /* AppDelegate.swift */; };
-		593642E42891562000EFAAA3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642E32891562000EFAAA3 /* ViewController.swift */; };
+		593642E42891562000EFAAA3 /* NewsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642E32891562000EFAAA3 /* NewsCollectionViewController.swift */; };
 		593642E92891562100EFAAA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 593642E82891562100EFAAA3 /* Assets.xcassets */; };
 		593642EC2891562100EFAAA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 593642EA2891562100EFAAA3 /* LaunchScreen.storyboard */; };
 		593642F82891596900EFAAA3 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642F72891596900EFAAA3 /* News.swift */; };
+		593642FA2891638A00EFAAA3 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642F92891638A00EFAAA3 /* NewsCell.swift */; };
+		593642FD289170CC00EFAAA3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642FC289170CC00EFAAA3 /* NetworkManager.swift */; };
+		593642FF2891719100EFAAA3 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593642FE2891719100EFAAA3 /* NewsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		593642DC2891562000EFAAA3 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		593642DF2891562000EFAAA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		593642E32891562000EFAAA3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		593642E32891562000EFAAA3 /* NewsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewController.swift; sourceTree = "<group>"; };
 		593642E82891562100EFAAA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		593642EB2891562100EFAAA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		593642ED2891562100EFAAA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		593642F72891596900EFAAA3 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		593642F92891638A00EFAAA3 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		593642FC289170CC00EFAAA3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		593642FE2891719100EFAAA3 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,11 +60,14 @@
 		593642DE2891562000EFAAA3 /* NewsApp */ = {
 			isa = PBXGroup;
 			children = (
+				593642E32891562000EFAAA3 /* NewsCollectionViewController.swift */,
+				593642FB289170AF00EFAAA3 /* Services */,
 				593642F62891595800EFAAA3 /* Models */,
-				593642E32891562000EFAAA3 /* ViewController.swift */,
 				593642F3289158D200EFAAA3 /* SupportFiles */,
 				593642F4289158E800EFAAA3 /* Resources */,
 				593642F5289158F700EFAAA3 /* Storyboard */,
+				593642F92891638A00EFAAA3 /* NewsCell.swift */,
+				593642FE2891719100EFAAA3 /* NewsViewModel.swift */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";
@@ -94,6 +103,14 @@
 				593642F72891596900EFAAA3 /* News.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		593642FB289170AF00EFAAA3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				593642FC289170CC00EFAAA3 /* NetworkManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +184,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				593642F82891596900EFAAA3 /* News.swift in Sources */,
-				593642E42891562000EFAAA3 /* ViewController.swift in Sources */,
+				593642FF2891719100EFAAA3 /* NewsViewModel.swift in Sources */,
+				593642E42891562000EFAAA3 /* NewsCollectionViewController.swift in Sources */,
+				593642FD289170CC00EFAAA3 /* NetworkManager.swift in Sources */,
+				593642FA2891638A00EFAAA3 /* NewsCell.swift in Sources */,
 				593642E02891562000EFAAA3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
