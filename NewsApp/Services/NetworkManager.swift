@@ -11,7 +11,6 @@ import Combine
 class NetworkManager {
     
     static let shared = NetworkManager()
-    var anyCancellable = Set<AnyCancellable>()
     
     private init() {}
     

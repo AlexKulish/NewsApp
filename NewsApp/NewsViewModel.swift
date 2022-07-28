@@ -11,7 +11,18 @@ import Combine
 class NewsViewModel {
     
     @Published var news: [News] = []
-    private var anyCancellable = Set<AnyCancellable>()
+    
+    init() {}
+    
+    func fetchNews() {
+        Task {
+            do {
+                news = try await NetworkManager.shared.fetchNews().news
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     
 }

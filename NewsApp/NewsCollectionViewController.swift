@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 class NewsCollectionViewController: UIViewController {
 
-    
-    private var news = [News]()
+    private var viewModel = NewsViewModel()
+        
+    private var anyCancellables = Set<AnyCancellable>()
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
@@ -20,12 +22,6 @@ class NewsCollectionViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         return collectionView
-    }()
-    
-    private lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.numberOfPages = news.count
-        return pageControl
     }()
     
     override func viewDidLoad() {
@@ -45,13 +41,8 @@ class NewsCollectionViewController: UIViewController {
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.8))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
-            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .none
-            section.visibleItemsInvalidationHandler = { (items, offset, env) -> Void in
-                self.pageControl.currentPage = items.last?.indexPath.row ?? 0
-            }
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
             
             return section
@@ -61,14 +52,13 @@ class NewsCollectionViewController: UIViewController {
     }
     
     private func fetchNews() {
-        Task {
-            do {
-                news = try await NetworkManager.shared.fetchNews().news
-                collectionView.reloadData()
-            } catch {
-                print(error.localizedDescription)
+        viewModel.fetchNews()
+        viewModel.$news
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
             }
-        }
+            .store(in: &anyCancellables)
     }
     
     private func setupNavigationBar() {
@@ -81,17 +71,31 @@ extension NewsCollectionViewController: UICollectionViewDataSource, UICollection
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        news.count
+        viewModel.news.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.identifier, for: indexPath) as? NewsCell else { return UICollectionViewCell() }
-        cell.configure(with: news[indexPath.item], indexPath: indexPath.item)
+        viewModel.$news
+            .receive(on: DispatchQueue.main)
+            .sink { news in
+                cell.configure(with: news[indexPath.item], numberOfPage: indexPath.item)
+            }
+            .store(in: &anyCancellables)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let newsDetailsVC = NewsDetailsViewController()
+//        newsDetailsVC.news2 = viewModel.news[indexPath.item]
+        viewModel.$news
+            .receive(on: DispatchQueue.main)
+            .sink { news in
+                newsDetailsVC.news.send(news[indexPath.item])
+                print(news[indexPath.item])
+            }
+            .store(in: &anyCancellables)
+        navigationController?.pushViewController(newsDetailsVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

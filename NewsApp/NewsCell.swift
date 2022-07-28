@@ -28,7 +28,7 @@ class NewsCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var pageLabel: UILabel = {
+    private lazy var numberOfPageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
@@ -50,9 +50,9 @@ class NewsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with news: News, indexPath: Int) {
+    func configure(with news: News, numberOfPage: Int) {
         newsDescriptionLabel.text = news.title
-        pageLabel.text = String(indexPath + 1)
+        numberOfPageLabel.text = String(numberOfPage + 1)
         
         guard let url = URL(string: news.titleImageUrl) else { return }
 
@@ -72,7 +72,7 @@ extension NewsCell {
     private func addSubviews() {
         addSubview(newsImageView)
         addSubview(newsDescriptionLabel)
-        addSubview(pageLabel)
+        addSubview(numberOfPageLabel)
     }
     
     private func setupConstraints() {
@@ -91,9 +91,9 @@ extension NewsCell {
         ])
         
         NSLayoutConstraint.activate([
-            pageLabel.topAnchor.constraint(equalTo: newsDescriptionLabel.topAnchor),
-            pageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            pageLabel.leadingAnchor.constraint(equalTo: newsDescriptionLabel.trailingAnchor)
+            numberOfPageLabel.topAnchor.constraint(equalTo: newsDescriptionLabel.topAnchor),
+            numberOfPageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            numberOfPageLabel.leadingAnchor.constraint(equalTo: newsDescriptionLabel.trailingAnchor)
         ])
         
     }
