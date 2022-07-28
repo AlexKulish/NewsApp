@@ -22,9 +22,7 @@ class NetworkManager {
             throw NetworkError.invalidUrl
         }
 
-        let (data, response) = try await URLSession.shared.data(from: url)
-        print(response)
-        print(data)
+        let (data, _) = try await URLSession.shared.data(from: url)
         let decoder = JSONDecoder()
 
         guard let news = try? decoder.decode(NewsModel.self, from: data) else {
