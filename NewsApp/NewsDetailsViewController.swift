@@ -100,14 +100,9 @@ class NewsDetailsViewController: UIViewController {
                 self?.descriptionLabel.text = news.description
                 self?.fullUrlLabel.text = news.fullUrl
                 
-                guard let url = URL(string: news.titleImageUrl) else { return }
-                
-                DispatchQueue.global().async {
-                    guard let imageData = try? Data(contentsOf: url) else { return }
-                    
-                    DispatchQueue.main.async {
-                        self?.newsImageView.image = UIImage(data: imageData)
-                    }
+                let url = URL(string: news.titleImageUrl)
+                if let imageData = ImageManager.shared.fetchImageData(from: url) {
+                    self?.newsImageView.image = UIImage(data: imageData)
                 }
             }
             .store(in: &anyCancellables)

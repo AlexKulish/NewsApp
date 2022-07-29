@@ -1,5 +1,5 @@
 //
-//  NewsCollectionViewController.swift
+//  NewsListViewController.swift
 //  NewsApp
 //
 //  Created by Alex Kulish on 27.07.2022.
@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class NewsCollectionViewController: UIViewController {
+class NewsListViewController: UIViewController {
 
     private var viewModel = NewsViewModel()
         
@@ -67,7 +67,7 @@ class NewsCollectionViewController: UIViewController {
     
 }
 
-extension NewsCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension NewsListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

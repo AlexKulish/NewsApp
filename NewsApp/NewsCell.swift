@@ -54,14 +54,9 @@ class NewsCell: UICollectionViewCell {
         newsDescriptionLabel.text = news.title
         numberOfPageLabel.text = String(numberOfPage + 1)
         
-        guard let url = URL(string: news.titleImageUrl) else { return }
-
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else { return }
-
-            DispatchQueue.main.async {
-                self.newsImageView.image = UIImage(data: imageData)
-            }
+        let url = URL(string: news.titleImageUrl)
+        if let imageData = ImageManager.shared.fetchImageData(from: url) {
+            newsImageView.image = UIImage(data: imageData)
         }
         
     }
