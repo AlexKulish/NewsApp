@@ -6,14 +6,27 @@
 //
 
 import UIKit
-import Combine
 
 class NewsDetailsViewController: UIViewController {
     
-    private lazy var categoryTypeLabel: UILabel = {
+    //MARK: - Public properties
+    
+    var viewModel: NewsDetailsViewModelProtocol? {
+        didSet {
+            titleLabel.text = viewModel?.title
+            descriptionLabel.text = viewModel?.description
+            fullUrlLabel.text = viewModel?.fullUrl
+            guard let imageData = viewModel?.imageData else { return }
+            newsImageView.image = UIImage(data: imageData)
+        }
+    }
+    
+    // MARK: - Private properties
+    
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -45,72 +58,35 @@ class NewsDetailsViewController: UIViewController {
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [categoryTypeLabel, descriptionLabel, fullUrlLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, fullUrlLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.distribution = .fill
         return stackView
     }()
-    
-    private var anyCancellables = Set<AnyCancellable>()
-    
-    var news = PassthroughSubject<News, Never>()
-//    var news2: News!
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configure()
-    }
+        
+    // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         addSubviews()
         setupConstraints()
-//        configure()
     }
+    
+}
+
+extension NewsDetailsViewController {
+    
+    // MARK: - Add subviews
     
     private func addSubviews() {
         view.addSubview(stackView)
         view.addSubview(newsImageView)
     }
     
-//    func configure() {
-//        categoryTypeLabel.text = news2.categoryType
-//        descriptionLabel.text = news2.description
-//        fullUrlLabel.text = news2.fullUrl
-//
-//        guard let url = URL(string: news2.titleImageUrl) else { return }
-//
-//        DispatchQueue.global().async {
-//            guard let imageData = try? Data(contentsOf: url) else { return }
-//
-//            DispatchQueue.main.async {
-//                self.newsImageView.image = UIImage(data: imageData)
-//            }
-//        }
-//    }
-    
-    private func configure() {
-        news
-            .sink { [weak self] news in
-                self?.categoryTypeLabel.text = news.categoryType
-                self?.descriptionLabel.text = news.description
-                self?.fullUrlLabel.text = news.fullUrl
-                
-                let url = URL(string: news.titleImageUrl)
-                if let imageData = ImageManager.shared.fetchImageData(from: url) {
-                    self?.newsImageView.image = UIImage(data: imageData)
-                }
-            }
-            .store(in: &anyCancellables)
-    }
-    
-}
-
-extension NewsDetailsViewController {
+    // MARK: - Setup constraints
     
     private func setupConstraints() {
         

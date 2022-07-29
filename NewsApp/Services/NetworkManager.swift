@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 class NetworkManager {
     
@@ -32,6 +31,8 @@ class NetworkManager {
     }
     
 }
+
+// MARK: - NetworkError
 
 enum NetworkError: Error {
     case invalidUrl

@@ -11,11 +11,9 @@ struct NewsModel: Codable {
     let news: [News]
 }
 
-struct News: Codable, Identifiable {
-    let id: Int
+struct News: Codable {
     let title: String
     let description: String
-    let publishedDate: String
     let fullUrl: String
     let titleImageUrl: String
     let categoryType: String

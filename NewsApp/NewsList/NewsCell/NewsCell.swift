@@ -11,6 +11,15 @@ class NewsCell: UICollectionViewCell {
     
     static let identifier = "NewsCell"
     
+    var viewModel: NewsCellViewModelProtocol? {
+        didSet {
+            newsDescriptionLabel.text = viewModel?.title
+            numberOfPageLabel.text = viewModel?.numberOfPage
+            guard let imageData = viewModel?.imageData else { return }
+            newsImageView.image = UIImage(data: imageData)
+        }
+    }
+    
     private lazy var newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,25 +59,19 @@ class NewsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with news: News, numberOfPage: Int) {
-        newsDescriptionLabel.text = news.title
-        numberOfPageLabel.text = String(numberOfPage + 1)
-        
-        let url = URL(string: news.titleImageUrl)
-        if let imageData = ImageManager.shared.fetchImageData(from: url) {
-            newsImageView.image = UIImage(data: imageData)
-        }
-        
-    }
 }
 
 extension NewsCell {
+    
+    // MARK: - Add subviews
     
     private func addSubviews() {
         addSubview(newsImageView)
         addSubview(newsDescriptionLabel)
         addSubview(numberOfPageLabel)
     }
+    
+    // MARK: - Setup constraints
     
     private func setupConstraints() {
         

@@ -10,8 +10,7 @@ import Combine
 
 class NewsListViewController: UIViewController {
 
-    private var viewModel = NewsViewModel()
-        
+    private var viewModel = NewsListViewModel()
     private var anyCancellables = Set<AnyCancellable>()
     
     private lazy var collectionView: UICollectionView = {
@@ -67,8 +66,9 @@ class NewsListViewController: UIViewController {
     
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+
 extension NewsListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.news.count
@@ -78,8 +78,8 @@ extension NewsListViewController: UICollectionViewDataSource, UICollectionViewDe
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.identifier, for: indexPath) as? NewsCell else { return UICollectionViewCell() }
         viewModel.$news
             .receive(on: DispatchQueue.main)
-            .sink { news in
-                cell.configure(with: news[indexPath.item], numberOfPage: indexPath.item)
+            .sink { _ in
+                cell.viewModel = self.viewModel.setupCellViewModel(at: indexPath)
             }
             .store(in: &anyCancellables)
         return cell
@@ -87,14 +87,7 @@ extension NewsListViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let newsDetailsVC = NewsDetailsViewController()
-//        newsDetailsVC.news2 = viewModel.news[indexPath.item]
-        viewModel.$news
-            .receive(on: DispatchQueue.main)
-            .sink { news in
-                newsDetailsVC.news.send(news[indexPath.item])
-                print(news[indexPath.item])
-            }
-            .store(in: &anyCancellables)
+        newsDetailsVC.viewModel = self.viewModel.setupDetailsViewModel(at: indexPath)
         navigationController?.pushViewController(newsDetailsVC, animated: true)
     }
     
