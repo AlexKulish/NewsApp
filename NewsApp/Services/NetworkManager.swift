@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - NetworkManager
+
 class NetworkManager {
     
     static let shared = NetworkManager()

@@ -7,12 +7,16 @@
 
 import Foundation
 
+// MARK: - NewsCellViewModelProtocol
+
 protocol NewsCellViewModelProtocol {
     var title: String { get }
     var imageData: Data? { get }
     var numberOfPage: String { get set }
     init(news: News, numberOfPage: Int)
 }
+
+// MARK: - NewsCellViewModel
 
 class NewsCellViewModel: NewsCellViewModelProtocol {
     

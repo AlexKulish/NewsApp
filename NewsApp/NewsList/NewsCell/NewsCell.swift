@@ -9,6 +9,8 @@ import UIKit
 
 class NewsCell: UICollectionViewCell {
     
+    // MARK: - Public properties
+    
     static let identifier = "NewsCell"
     
     var viewModel: NewsCellViewModelProtocol? {
@@ -19,6 +21,8 @@ class NewsCell: UICollectionViewCell {
             newsImageView.image = UIImage(data: imageData)
         }
     }
+    
+    // MARK: - Private properties
     
     private lazy var newsImageView: UIImageView = {
         let imageView = UIImageView()
@@ -44,6 +48,8 @@ class NewsCell: UICollectionViewCell {
         label.textColor = .systemGray
         return label
     }()
+    
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)

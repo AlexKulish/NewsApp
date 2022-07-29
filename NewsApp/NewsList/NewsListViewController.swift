@@ -9,6 +9,8 @@ import UIKit
 import Combine
 
 class NewsListViewController: UIViewController {
+    
+    // MARK: - Private properties
 
     private var viewModel = NewsListViewModel()
     private var anyCancellables = Set<AnyCancellable>()
@@ -23,6 +25,8 @@ class NewsListViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Lyfecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -30,26 +34,9 @@ class NewsListViewController: UIViewController {
         fetchNews()
         setupNavigationBar()
     }
-
-    private func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.8))
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-            
-            return section
-            
-        }
-        return layout
-    }
     
+    // MARK: - Private methods
+
     private func fetchNews() {
         viewModel.fetchNews()
         viewModel.$news
@@ -101,7 +88,29 @@ extension NewsListViewController: UICollectionViewDataSource, UICollectionViewDe
             cell.layer.transform = CATransform3DIdentity
             cell.alpha = 1
         }
-        
     }
+}
+
+// MARK: - Create Compositional Layout
+
+extension NewsListViewController {
     
+    private func createCompositionalLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+            
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0)
+            
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.8))
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+            
+            return section
+            
+        }
+        return layout
+    }
 }

@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - NewsDetailsViewModelProtocol
+
 protocol NewsDetailsViewModelProtocol {
     var title: String { get }
     var description: String { get }
@@ -14,6 +16,8 @@ protocol NewsDetailsViewModelProtocol {
     var imageData: Data? { get }
     init(news: News)
 }
+
+// MARK: - NewsDetailsViewModel
 
 class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
     
