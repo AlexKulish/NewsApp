@@ -19,10 +19,13 @@ class NewsCell: UICollectionViewCell {
             numberOfPageLabel.text = viewModel?.numberOfPage
             guard let imageData = viewModel?.imageData else { return }
             newsImageView.image = UIImage(data: imageData)
+            activityIndicator?.stopAnimating()
         }
     }
     
     // MARK: - Private properties
+    
+    private var activityIndicator: UIActivityIndicatorView?
     
     private lazy var newsImageView: UIImageView = {
         let imageView = UIImageView()
@@ -55,6 +58,7 @@ class NewsCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubviews()
         setupConstraints()
+        activityIndicator = showActivityIndicator(in: self)
         backgroundColor = .white
         layer.borderWidth = 0.5
         layer.borderColor = CGColor(gray: 0.75, alpha: 1)
@@ -64,6 +68,19 @@ class NewsCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .black
+        activityIndicator.startAnimating()
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        
+        addSubview(activityIndicator)
+        
+        return activityIndicator
+    }
+    
     
 }
 
@@ -81,14 +98,17 @@ extension NewsCell {
     
     private func setupConstraints() {
         
+        let leadingTrailingConstant: CGFloat = 32
+        let topBottomConstant: CGFloat = 16
+        
         NSLayoutConstraint.activate([
-            newsDescriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
-            newsDescriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
-            newsDescriptionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16)
+            newsDescriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingTrailingConstant),
+            newsDescriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -leadingTrailingConstant),
+            newsDescriptionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: topBottomConstant)
         ])
         
         NSLayoutConstraint.activate([
-            newsImageView.topAnchor.constraint(equalTo: newsDescriptionLabel.bottomAnchor, constant: 16),
+            newsImageView.topAnchor.constraint(equalTo: newsDescriptionLabel.bottomAnchor, constant: topBottomConstant),
             newsImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             newsImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             newsImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)

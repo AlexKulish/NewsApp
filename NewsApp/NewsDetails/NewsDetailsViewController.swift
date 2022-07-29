@@ -90,17 +90,22 @@ extension NewsDetailsViewController {
     
     private func setupConstraints() {
         
+        let topConstantForStackView: CGFloat = 50
+        let leadingTrailingConstantForStackView: CGFloat = 32
+        let constantForNewsImageView: CGFloat = 16
+        let heightConstant: CGFloat = 200
+        
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstantForStackView),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingTrailingConstantForStackView),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingTrailingConstantForStackView)
         ])
         
         NSLayoutConstraint.activate([
-            newsImageView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            newsImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            newsImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            newsImageView.heightAnchor.constraint(equalToConstant: 200)
+            newsImageView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: constantForNewsImageView),
+            newsImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: constantForNewsImageView),
+            newsImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -constantForNewsImageView),
+            newsImageView.heightAnchor.constraint(equalToConstant: heightConstant)
         ])
         
     }

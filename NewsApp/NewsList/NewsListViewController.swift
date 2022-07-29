@@ -98,15 +98,20 @@ extension NewsListViewController {
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0)
+            let edgeInset: CGFloat = 8
+            let zeroEdgeInset: CGFloat = 0
+            let countItemsInGroup = 2
+            let fractional: CGFloat = 1
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.8))
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fractional), heightDimension: .fractionalHeight(fractional))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = NSDirectionalEdgeInsets(top: edgeInset, leading: zeroEdgeInset, bottom: edgeInset, trailing: zeroEdgeInset)
+            
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fractional), heightDimension: .fractionalHeight(0.8))
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: countItemsInGroup)
             
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+            section.contentInsets = NSDirectionalEdgeInsets(top: zeroEdgeInset, leading: edgeInset, bottom: zeroEdgeInset, trailing: edgeInset)
             
             return section
             
